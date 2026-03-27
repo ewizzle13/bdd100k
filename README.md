@@ -67,25 +67,25 @@ Unknown
 
 Key Components:
 
-Stacked convolutional blocks (32 → 64 → 128 → 256 filters)
-Max-pooling layers
-Global Average Pooling
-Dense + Dropout layers
-Softmax output (7 classes)
+*Stacked convolutional blocks (32 → 64 → 128 → 256 filters)
+*Max-pooling layers
+*Global Average Pooling
+*Dense + Dropout layers
+*Softmax output (7 classes)
 
 ---
 
 ### 3. Training
 
-Loss Function: Sparse Categorical Crossentropy
-Optimizer: Adam
-Learning Rate: 0.0001
-Batch Size: 32
-Epochs: 10
-Evaluation Metrics:
-Accuracy
-Training Loss
-Validation Loss
+*Loss Function: Sparse Categorical Crossentropy
+*Optimizer: Adam
+*Learning Rate: 0.0001
+*Batch Size: 32
+*Epochs: 10
+*Evaluation Metrics:
+*Accuracy
+*Training Loss
+*Validation Loss
 
 ---
 
