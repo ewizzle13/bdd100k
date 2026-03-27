@@ -1,34 +1,43 @@
-# Waymo Nighttime Object Detection Project
+# BDD100K Scene Classification using Deep Learning
 
 ## Overview
 
-This project focuses on building and evaluating a **deep learning (CNN-based) model** using the Waymo Open Dataset, with a specific emphasis on **nighttime driving conditions**.
+This project focuses on building and evaluating a **deep learning (CNN-based) model** using the BDD100K dataset.
 
-The goal is to analyze how well object detection models perform in **low-light environments**, which present unique challenges such as reduced visibility, noise, and decreased feature clarity.
+
+Scene classification is a critical task in computer vision that enables autonomous vehicles to interpret their surroundings by categorizing environments such as highways, residential areas, city streets, tunnels, and parking lots.
+
+Initially, the Waymo dataset was considered; however, due to challenges with TFRecord formatting and data preprocessing, the project transitioned to BDD100K, which provided a more structured and accessible dataset.
 
 ---
 
 ## Objectives
 
-* Extract and preprocess Waymo dataset frames
-* Filter data to include **nighttime driving scenarios only**
+* Develop and train deep learning models for scene classification
+* Preprocess and prepare the BDD100K dataset for model training
 * Build a **Conv2D-based deep learning model**
 * Evaluate model performance using standard metrics
-* Analyze challenges of object detection in low-light conditions
+* Analyze challenges such as overfitting and dataset limitations
 
 ---
 
 ## Dataset
 
-* **Source:** Waymo Open Dataset
-* **Format:** `.tfrecord` files
-* **Data Used:**
+Source: BDD100K Scenario Classification Dataset
 
-  * Camera images
-  * Object labels (vehicles, pedestrians, cyclists)
-* **Filtering Criteria:**
+The dataset is a large-scale driving dataset designed for computer vision tasks in autonomous driving.
 
-  * `time_of_day == "Night"`
+Dataset Features:
+Organized into training, validation, and testing directories
+Original test folder was empty, requiring a custom data split
+Contains 7 scene classes:
+Parking lot
+Gas station
+Residential
+City street
+Highway
+Tunnel
+Unknown
 
 ---
 
@@ -36,9 +45,9 @@ The goal is to analyze how well object detection models perform in **low-light e
 
 ### 1. Data Processing
 
-* Parsed Waymo `.tfrecord` files
-* Extracted image frames from camera sensors
-* Filtered frames using metadata (`time_of_day`)
+* Resized images to 224 × 224 (160 for VGG)
+* Normalized pixel values to [0, 1]
+* Batch size: 32
 * Normalized image data
 
 ---
@@ -54,33 +63,44 @@ The goal is to analyze how well object detection models perform in **low-light e
   * Global Average Pooling
   * Dense output layer for classification
 
+ A simplified VGG-style CNN used as a baseline for comparison.
+
+Key Components:
+
+Stacked convolutional blocks (32 → 64 → 128 → 256 filters)
+Max-pooling layers
+Global Average Pooling
+Dense + Dropout layers
+Softmax output (7 classes)
+
 ---
 
 ### 3. Training
 
-* Loss Function: Binary / Categorical Crossentropy (based on label structure)
-* Optimizer: Adam
-* Evaluation Metrics:
-
-  * Accuracy
-  * Precision
-  * Recall
-  * F1-score
+Loss Function: Sparse Categorical Crossentropy
+Optimizer: Adam
+Learning Rate: 0.0001
+Batch Size: 32
+Epochs: 10
+Evaluation Metrics:
+Accuracy
+Training Loss
+Validation Loss
 
 ---
 
 ## Results
 
-* Evaluated model performance on **nighttime-only data**
-* Compared model accuracy under low-light conditions
-* Identified limitations in detecting objects with reduced visibility
+* Evaluated model performance on BDD100K scene classification dataset
+* Compared performance of models
+* Observed higher accuracy with ResNet, but with signs of overfitting, VGG achieved stable and consistent performance across epochs
 
 ---
 
 ## Key Insights
 
-* Nighttime conditions significantly impact detection accuracy
-* Feature extraction is more challenging due to lighting constraints
+* Overfitting is a major challenge, especially with similar images
+* Model architecture impacts performance
 * Model performance depends heavily on preprocessing and data quality
 
 ---
@@ -90,7 +110,7 @@ The goal is to analyze how well object detection models perform in **low-light e
 * Python
 * TensorFlow / Keras
 * NumPy / Pandas
-* Waymo Open Dataset
+* BDD100K Dataset
 
 ---
 
@@ -104,13 +124,17 @@ The goal is to analyze how well object detection models perform in **low-light e
 
 ## Future Work
 
-* Improve performance using data augmentation for low-light conditions
+* Apply data augmentation to improve generalization
 * Explore transfer learning with pretrained models
 * Implement more advanced detection architectures (e.g., YOLO, Faster R-CNN)
-**Extend analysis to different weather and lighting conditions** (We can talk about this)
+**Extend analysis to:
+
+Different weather conditions
+Day vs night classification
 
 ---
 
 ## Summary
 
-This project demonstrates the challenges and considerations of applying deep learning models to **real-world autonomous driving data**, particularly in **nighttime environments**, and highlights the importance of robust model design for safety-critical applications.
+This project demonstrates the application of deep learning models to scene classification in autonomous driving environments.
+Overall, the project highlights the importance of model selection, dataset quality, and preprocessing in building reliable computer vision systems.
